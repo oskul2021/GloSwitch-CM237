@@ -1,11 +1,11 @@
-  pipeline {
-    tools {
-    maven 'Maven3'
+ pipeline {
+     agent any
+     tools {
+        maven 'Maven3'
     }
-    agent any
     environment {
     registry = "037572033749.dkr.ecr.eu-north-1.amazonaws.com/gloswitch237"
-    }
+     }
     
     stages {
          stage('Cloning Git') {
@@ -16,7 +16,7 @@
         }
          stage ('Build jar') {
             steps {
-              sh 'mvn clean install'
+              sh 'mvn package'
             }
          }
          // Building Docker images
@@ -33,8 +33,8 @@
          stage('Pushing to ECR') {
             steps{
               script {
-                sh 'aws ecr get-login-password --region eu-north-1 | docker login --username AWS --password-stdin 037572033749.dkr.ecr.eu-north-1.amazonaws.com/gloswitch237'
-                sh 'docker push 037572033749.dkr.ecr.eu-north-1.amazonaws.com/gloswitch237:$BUILD_NUMBER'
+                sh 'aws ecr get-login-password --region eu-north-1 | docker login --username AWS --password-stdin 037572033749.dkr.ecr.eu-north-1.amazonaws.com'
+                sh 'docker push 037572033749.dkr.ecr.eu-north-1.amazonaws.com/gloswitch237:latest:$BUILD_NUMBER'
               }
             }
          }
@@ -43,7 +43,3 @@
               script {
                 sh "helm upgrade first --install mychart --namespace helm-deployment --set image.tag=$BUILD_NUMBER"
               }
-           }
-         }
-    }
-  }
