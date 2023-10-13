@@ -11,7 +11,7 @@ Pipeline {
          stage('Cloning Git') {
              steps {
                checkout([$class: 'GitSCM', branches: [ [ name: '*/master' ] ], doGenerateSubmoduleConfigurations:
-               false, extensions: [ ], submoduleCfg: [ ], userRemoteConfigs: [ [ credentialsId: '', url: 'https://github.com/Buyinda/GloSwitch-CM237/tikit-support' ] ] ])
+               false, extensions: [ ], submoduleCfg: [ ], userRemoteConfigs: [ [ credentialsId: '', url: 'https://github.com/Buyinda/GloSwitch-app' ] ] ])
             }
         }
          stage ('Build jar') {
