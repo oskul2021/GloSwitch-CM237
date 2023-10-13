@@ -1,4 +1,4 @@
 FROM openjdk:8-jdk-alpine
-WORKDIR /app
-COPY ./target/*.jar /app.jar
-CMD ["java", "-jar", "app.jar"]
+EXPOSE 8080
+ADD .mvn/maven-wrapper.jar app.jar
+ENTRYPOINT ["java", "-jar", "app.jar"]
