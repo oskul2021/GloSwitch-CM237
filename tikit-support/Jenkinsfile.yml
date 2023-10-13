@@ -1,8 +1,8 @@
- pipeline {
-     agent any
-     tools {
+Pipeline {
+      agent any
+      tools {
         maven 'Maven3'
-    }
+        }
     environment {
     registry = "037572033749.dkr.ecr.eu-north-1.amazonaws.com/gloswitch237"
      }
@@ -11,7 +11,7 @@
          stage('Cloning Git') {
              steps {
                checkout([$class: 'GitSCM', branches: [ [ name: '*/master' ] ], doGenerateSubmoduleConfigurations:
-               false, extensions: [ ], submoduleCfg: [ ], userRemoteConfigs: [ [ credentialsId: '', url: 'https://github.com/oskul2021/GloSwitch-CM237.git' ] ] ])
+               false, extensions: [ ], submoduleCfg: [ ], userRemoteConfigs: [ [ credentialsId: '', url: 'https://github.com/Buyinda/GloSwitch-CM237/tikit-support' ] ] ])
             }
         }
          stage ('Build jar') {
@@ -43,3 +43,7 @@
               script {
                 sh "helm upgrade first --install mychart --namespace helm-deployment --set image.tag=$BUILD_NUMBER"
               }
+            }
+         }
+   }
+  }
